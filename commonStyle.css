@@ -1,0 +1,17 @@
+body{
+    width: 1920px;
+    height: 1080px;
+    background-color: white;
+    margin-left: 0px;
+}
+header {
+    height : 104px;
+    width : 1920px;
+    line-height: 104px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 32px;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    font-weight: 400;
+}
