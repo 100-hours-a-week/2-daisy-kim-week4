@@ -56,3 +56,22 @@ header {
     font-weight: 400;
     font-size: 12px;
 }
+#toggle-frame{
+    position: absolute;
+    top:80px;
+    left: 1118px;
+    display: none;
+    width : 115px;
+}
+.edit-button{
+    padding: 10px 24px 10px 24px;
+    background-color: #d9d9d9;
+    text-align: center;
+    cursor: pointer;
+}
+.edit-button-text{
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+    font-weight: 400;
+}
