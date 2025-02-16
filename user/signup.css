@@ -29,6 +29,7 @@
     height: 149px;
     border-radius: 50%;
     background-color: #c4c4c4;
+    position: relative;
 }
 #signup-profile-img-input{
     display: none;
@@ -41,6 +42,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
 }
 .signup-input-wrapper{
     display: flex;

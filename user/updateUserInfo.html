@@ -4,6 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="../commonStyle.css">
+        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="signup.css">
+        <link rel="stylesheet" href="updateUserInfo.css">
         <title>회원 정보 수정</title>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -38,7 +41,48 @@
                     isLoad = !isLoad;
                 });
             });
-            </script>
+        </script>
+        <script type="module">
+            let id = 1;
+
+            import {users} from '../data/user.js';
+            const user = users.find(item => item.id === parseInt(id));
+
+            if(user) {
+                const userInfo = document.getElementById("edit-user-info-wrapper");
+                userInfo.innerHTML = `
+                <div class="signup-profile-container">
+                    <div class="signup-profile-title">
+                        <div class="signup-profile-text">프로필 사진</div>
+                        <div class="help-text">*helper-text</div>
+                    </div>
+                    <div class ="signup-profile-img">
+                        <img class="edit-profile-img" src="${user.profileImg}">
+                        <input type="file" id="signup-profile-img-input" hidden>
+                        <div class="custom-profile-edit-button">
+                            <label for="signup-profile-img-input" class="custom-file-label-edit">변경</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-user-info-input">
+                    <div class="login-item">
+                        <div class="login-item-title">이메일*</div>
+                        <div class="user-email">${user.email}</div>
+                    </div>
+                    <div class="login-item">
+                        <div class="login-item-title">닉네임*</div>
+                        <input class="login-item-input" type="text" placeholder="닉네임을 입력하세요" value="${user.name}">
+                        <div class="help-text">help-text</div>
+                    </div>
+                </div>
+                <div class="edit-submit-button">
+                    <input class="login-button" id="signup-button" type="submit" value="수정하기">
+                </div>
+                `;
+            } else {
+                document.getElementById("edit-user-info-wrapper").innerHTML = "<p>사용자 정보를 찾을 수 없습니다.</p>";
+            }
+        </script>
     </head>
     <body>
         <header>아무말 대잔치</header>
@@ -46,6 +90,13 @@
             <img class="profile-img" src="../assets/img/defaultProfile.png">
         </div>
         <div id="toggle-frame"></div>
-        <div>회원 정보 수정 화면</div>
+        <div class="wrapper">
+            <div class="page-info-title">회원 정보 수정</div>
+            <form class="signup-wrapper" id="edit-user-info-wrapper" action="./updateUserInfo.html"></form>
+            <form action="login.html">
+                <input class="withdraw" type="submit" value="회원 탈퇴">
+            </form>
+            <div class="edit-done">수정 완료</div>
+        </div>
     </body>
 </html>
