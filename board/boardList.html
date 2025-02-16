@@ -4,10 +4,47 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="../commonStyle.css">
+        <link rel = "stylesheet" href="boardList.css">
         <title>게시글 목록</title>
+        <script type="module">
+            import { boardItems } from '../data/board.js';
+            const boardList = document.getElementById("board-list");
+            const boardHTML = boardItems.map(item => `
+                <div class="board-item">
+                    <div class="board-title">${item.title}</div>
+                    <div class="board-info">
+                        <div class="board-info-simple">
+                            <div class="like">좋아요 ${item.likes}</div>
+                            <div class="like">댓글 ${item.comments}</div>
+                            <div class="like">조회수 ${item.views}</div>
+                        </div>
+                        <div class="time">${item.time}</div>
+                    </div>
+                    <hr class="line">
+                    <div class="board-writer">
+                        <img class="board-writer-profile-img" src="${item.profileImg || '../assets/img/defaultProfile.png'}" alt="프로필 이미지">
+                        <div class="board-writer-profile-name">${item.writer}</div>
+                    </div>
+                </div>
+            `).join("");
+
+            boardList.innerHTML = boardHTML;
+
+        </script>
     </head>
     <body>
         <header>아무말 대잔치</header>
-        <div>게시글 목록 화면</div>
+        <div class="profile-icon">
+            <img class="profile-img" src="../assets/img/defaultProfile.png">
+        </div>
+        <div class="wrapper">
+            <div class="board-list-page-title">안녕하세요,<br>아무말 대잔치 <b>게시판</b> 입니다.</div>
+            <div class="write-board-button-container">
+                <a href="boardPost.html" class="write-board-button">
+                    게시글 작성
+                </a>
+            </div>
+            <div id="board-list"></div>
+        </div>
     </body>
 </html>

@@ -1,7 +1,7 @@
 body{
     width: 1920px;
     height: 1080px;
-    background-color: white;
+    background-color: #F4F5F7;
     margin-left: 0px;
 }
 header {
@@ -16,4 +16,9 @@ header {
     font-weight: 400;
     position: absolute;
     top : 0px;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

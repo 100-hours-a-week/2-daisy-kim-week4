@@ -1,0 +1,97 @@
+.wrapper {
+    gap : 24px;
+    padding-bottom: 24px;
+}
+.board-list-page-title{
+    width: 280px;
+    margin-top: 144px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 24px;
+}
+.write-board-button-container{
+    width: 600px;
+    display: flex;
+    justify-content: flex-end;
+}
+.write-board-button{
+    width: 138px;
+    line-height : 39px;
+    text-decoration: none;
+    color: white;
+    background-color: #ACA0EB;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#board-list{
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.board-item{
+    cursor: pointer;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 2px 2px 2px #00000020;
+    display: flex;
+    flex-direction: column;
+    padding : 24px;
+    gap : 10px;
+}
+.board-title {
+    font-weight: 700;
+    font-size: 24px;
+}
+.board-info{
+    font-weight: 400;
+    font-size : 14px;
+    display: flex;
+    justify-content: space-between;
+}
+.board-info-simple{
+    display: flex;
+    gap: 10px;
+}
+
+.board-writer{
+    display: flex;
+    gap : 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.board-writer-profile-img{
+    width : 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+}
+.board-writer-profile-name {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.line{
+    width : 100%;
+}
+
+.profile-icon {
+    height : 104px;
+    position: absolute;
+    left : 1196px;
+    top : 0px;
+    display: flex;
+    align-items: center;
+}
+.profile-img{
+    width : 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+    cursor: pointer;
+}
