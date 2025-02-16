@@ -59,3 +59,14 @@
     font-weight: 400;
     cursor: pointer;
 }
+
+/*여기서부터 updatePassword.html의 css*/
+.page-pw-title{
+    margin-top: 265px;
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 94px;
+}
+.edit-pw-input{
+    margin-bottom: 12px;
+}
