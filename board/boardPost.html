@@ -6,6 +6,76 @@
         <link rel = "stylesheet" href="../commonStyle.css">
         <link rel = "stylesheet" href="./boardPost.css">
         <title>게시글 업로드</title>
+        <script type="module">
+            import { boardItems } from '../data/board.js';
+
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const boardItem = boardItems.find(item => item.id === parseInt(id));
+
+            if (boardItem) {
+                const boardDetail = document.getElementById("container");
+                boardDetail.innerHTML = `
+                <form class="post-wrapper" action="boardDetail.html?id=${id}">
+                    <div class="post-input-wrapper">
+                        <div class="title-item">
+                            <div class="post-item-title">제목*</div>
+                            <div class="post-titile-input-box">
+                                <input class="post-title-input" type="text" value="${boardItem.title}" placeholder="제목을 입력해주세요. (최대 26글자)">
+                            </div>
+                        </div>
+                        <div class="post-item">
+                            <div class="post-item-title">내용*</div>
+                            <div class="post-titile-input-box">
+                                <textarea class="content-input" type="text" placeholder="내용을 입력해 주세요.">${boardItem.content}</textarea>
+                            </div>
+                            <div class="help-text">help-text</div>
+                        </div>
+                        <div class="post-image">
+                            <div class="post-image-title">이미지</div>
+                            <div class="file-input-wrapper">
+                                <label for="image-input" class="file-label">
+                                    파일 선택
+                                </label>
+                                <span class="file-name">
+                                   ${boardItem.contentImg ? boardItem.contentImg : "파일을 선택해주세요."}
+                                </span>
+                                <input id="image-input" type="file" hidden>
+                           </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="${id}">
+                    <input class="post-button" type="submit" value="수정하기">
+                </form>
+                `;
+            } else {
+                const boardDetail = document.getElementById("container");
+                boardDetail.innerHTML = `
+                <form class="post-wrapper" action="boardList.html">
+                    <div class="post-input-wrapper">
+                        <div class="title-item">
+                            <div class="post-item-title">제목*</div>
+                            <div class="post-titile-input-box">
+                                <input class="post-title-input" type="text" placeholder="제목을 입력해주세요. (최대 26글자)">
+                            </div>
+                        </div>
+                        <div class="post-item">
+                            <div class="post-item-title">내용*</div>
+                            <div class="post-titile-input-box">
+                                <textarea class="content-input" type="text" placeholder="내용을 입력해 주세요."></textarea>
+                            </div>
+                            <div class="help-text">help-text</div>
+                        </div>
+                        <div class="post-image">
+                            <div class="post-image-title">이미지</div>
+                            <input class="image-input" type="file">
+                        </div>
+                    </div>
+                    <input class="post-button" type="submit" value="완료">
+                </form>
+                `;
+            }
+        </script>
     </head>
     <body>
         <header>아무말 대잔치</header>
@@ -23,28 +93,7 @@
             <div class="page-title">
                 게시글 작성
             </div>
-            <form class="post-wrapper" action="../board/boardList.html">
-                <div class="post-input-wrapper">
-                    <div class="title-item">
-                        <div class="post-item-title">제목*</div>
-                        <div class="post-titile-input-box">
-                            <input class="post-title-input" type="text" placeholder="제목을 입력해주세요. (최대 26글자)">
-                        </div>
-                    </div>
-                    <div class="post-item">
-                        <div class="post-item-title">내용*</div>
-                        <div class="post-titile-input-box">
-                            <textarea class="content-input" type="text" placeholder="내용을 입력해 주세요."></textarea>
-                        </div>
-                        <div class="help-text">help-text</div>
-                    </div>
-                    <div class="post-image">
-                        <div class="post-image-title">이미지</div>
-                        <input class="image-input" type="file">
-                    </div>
-                </div>
-                <input class="post-button" type="submit" value="완료">
-            </form>
+            <div id="container"></div>
         </div>
     </body>
 </html>

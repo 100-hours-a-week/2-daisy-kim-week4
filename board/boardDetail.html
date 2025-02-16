@@ -22,14 +22,14 @@
                         <div class="board-item-info">
                             <div class="board-item-info-left">
                                 <div class="profile-img">
-                                    <img src="${boardItem.profileImg}">
+                                    <img class="profile-img" src="${boardItem.profileImg === "" ? "../assets/img/defaultProfile.png" : boardItem.profileImg}">
                                 </div>
                                 <div class="profile-name">${boardItem.writer}</div>
                                 <div class="written-time">${boardItem.time}</div>
                             </div>
                             <div class="board-item-info-right">
                                 <button class="board-item-edit-button">
-                                    <a href="boardPost.html">수정</a>
+                                    <a href="boardPost.html?id=${boardItem.id}">수정</a>
                                 </button>
                                 <button class="board-item-edit-button">
                                     <a href="boardList.html">삭제</a>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="board-body">
-                        <img class="board-img" src="${boardItem.contentImg}">
+                        <img class="board-img" src="${boardItem.contentImg === "" ? "../assets/img/warning.png" : boardItem.contentImg}">
                         <div class="board-content">${boardItem.content}</div>
                         <div class="board-reaction-info">
                             <div class="like-container">
@@ -55,7 +55,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr width="100%">
                 `;
             } else {
                 document.getElementById("container").innerHTML = "<p>게시글을 찾을 수 없습니다.</p>";
@@ -89,14 +88,22 @@
 </head>
 <body>
     <header>아무말 대잔치</header>
+    <div id="go-back"><img class="go-back-img" src="../assets/img/backButton.png"></div>
+    <script>
+        const backButton = document.getElementById("go-back");
+        backButton.addEventListener("click", () => {
+        window.history.back();
+    });
+    </script>
     <div class="profile-icon">
         <img class="profile-img" src="../assets/img/defaultProfile.png">
     </div>
     <div class="wrapper">
         <div class="container" id="container"></div>
         <form action="boardDetail.html" class="comment-container">
-            <textarea placeholder="댓글을 남겨주세요!!" class="comment-input"></textarea>
-            <hr width="100%">
+            <div class="comment-input-box">
+                <textarea placeholder="댓글을 남겨주세요!!" class="comment-input"></textarea>
+            </div>
             <input type="submit" class="comment-register-button" value="댓글 등록">
         </form>
         <div id="comment-list">
