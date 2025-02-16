@@ -4,10 +4,47 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href="../commonStyle.css">
+        <link rel = "stylesheet" href="./boardPost.css">
         <title>게시글 업로드</title>
     </head>
     <body>
         <header>아무말 대잔치</header>
-        <div>게시글 업로드 화면</div>
+        <div id="go-back"><img class="go-back-img" src="../assets/img/backButton.png"></div>
+        <script>
+            const backButton = document.getElementById("go-back");
+            backButton.addEventListener("click", () => {
+            window.history.back();
+        });
+        </script>
+        <div class="profile-icon">
+            <img class="profile-img" src="../assets/img/defaultProfile.png">
+        </div>
+        <div class="wrapper">
+            <div class="page-title">
+                게시글 작성
+            </div>
+            <form class="post-wrapper" action="../board/boardList.html">
+                <div class="post-input-wrapper">
+                    <div class="title-item">
+                        <div class="post-item-title">제목*</div>
+                        <div class="post-titile-input-box">
+                            <input class="post-title-input" type="text" placeholder="제목을 입력해주세요. (최대 26글자)">
+                        </div>
+                    </div>
+                    <div class="post-item">
+                        <div class="post-item-title">내용*</div>
+                        <div class="post-titile-input-box">
+                            <textarea class="content-input" type="text" placeholder="내용을 입력해 주세요."></textarea>
+                        </div>
+                        <div class="help-text">help-text</div>
+                    </div>
+                    <div class="post-image">
+                        <div class="post-image-title">이미지</div>
+                        <input class="image-input" type="file">
+                    </div>
+                </div>
+                <input class="post-button" type="submit" value="완료">
+            </form>
+        </div>
     </body>
 </html>
