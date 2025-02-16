@@ -79,19 +79,3 @@
 .line{
     width : 100%;
 }
-
-.profile-icon {
-    height : 104px;
-    position: absolute;
-    left : 1196px;
-    top : 0px;
-    display: flex;
-    align-items: center;
-}
-.profile-img{
-    width : 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #d9d9d9;
-    cursor: pointer;
-}
