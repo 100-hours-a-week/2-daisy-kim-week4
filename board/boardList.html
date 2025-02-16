@@ -10,7 +10,7 @@
             import { boardItems } from '../data/board.js';
             const boardList = document.getElementById("board-list");
             const boardHTML = boardItems.map(item => `
-                <div class="board-item">
+                <div class="board-item" board-id="${item.id}">
                     <div class="board-title">${item.title}</div>
                     <div class="board-info">
                         <div class="board-info-simple">
@@ -30,6 +30,13 @@
 
             boardList.innerHTML = boardHTML;
 
+            const boardItemsElements = document.querySelectorAll(".board-item");
+            boardItemsElements.forEach(item => {
+                item.addEventListener("click", () => {
+                    const id = item.getAttribute("board-id");
+                    window.location.href = `boardDetail.html?id=${id}`;
+                });
+            });
         </script>
     </head>
     <body>
