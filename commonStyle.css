@@ -63,7 +63,8 @@ header {
     color : red;
     font-weight: 400;
     font-size: 12px;
-    height: 15px;
+    min-height: 15px;
+    margin : 4px 0px 4px 0px;
 }
 
 /*헤더에서 프로필 선택 시 보이는 토글 css*/
