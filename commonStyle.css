@@ -80,10 +80,25 @@ header {
     background-color: #d9d9d9;
     text-align: center;
     cursor: pointer;
+    &:hover {
+        background-color: #e9e9e9;
+    }
 }
 .edit-button-text{
     text-decoration: none;
     color: black;
     font-size: 12px;
     font-weight: 400;
+}
+
+/*팝업*/
+#popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000050;
+    display: none;
+    z-index: 1000;
 }

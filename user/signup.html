@@ -49,7 +49,7 @@
                 const nickHelper = document.getElementById("nick-helper-text");
 
                 function validateEmail(email) {
-                    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
                     if (email.length === 0) {
                         return "*이메일을 입력해 주세요.";
                     } else if (email.length < 5 || email.length > 50 || !emailRegex.test(email)) {

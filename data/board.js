@@ -2,7 +2,7 @@ export const boardItems = [
     {
         id: 1,
         title: "제목1",
-        likes: 5,
+        likes: 12344,
         commentsCnt: 2,
         views: 50,
         time: "2021-01-01 00:00:00",
