@@ -31,8 +31,8 @@
                                 <button class="board-item-edit-button">
                                     <a href="boardPost.html?id=${boardItem.id}">수정</a>
                                 </button>
-                                <button class="board-item-edit-button">
-                                    <a href="boardList.html">삭제</a>
+                                <button class="board-item-edit-button" id = "board-delete">
+                                    삭제
                                 </button>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="comment-buttons">
                     <button class="board-item-edit-button">수정</button>
-                    <button class="board-item-edit-button">삭제</button>
+                    <button class="board-item-edit-button" id="comment-delete">삭제</button>
                 </div>
             </div>
             `).join("");
@@ -119,6 +119,54 @@
                     });
                 });
                 </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("../component/popUp.html")
+                .then(response => response.text())
+                .then(html => {
+                    const popupContainer = document.createElement("div");
+                    popupContainer.innerHTML = html;
+                    document.body.appendChild(popupContainer);
+
+                    const boardDeleteButton = document.getElementById("board-delete");
+                    const commentDeleteButton = document.getElementById("comment-delete");
+                    const popup = popupContainer.querySelector(".popup-container");
+                    const line1 = popup.querySelector(".line1");
+                    const line2 = popup.querySelector(".line2");
+                    const yesButton = popup.querySelector(".ok-button");
+                    const noButton = popup.querySelector(".cancel-button");
+
+                    let isComment = false;
+
+                    popup.style.display = "none";
+
+                    boardDeleteButton.addEventListener("click", () => {
+                        line1.textContent = "게시글을 삭제하시겠습니까?";
+                        line2.textContent = "삭제한 내용은 복구 할 수 없습니다.";
+                        popup.style.display = "flex";
+                        isComment = false;
+                    });
+
+                    commentDeleteButton.addEventListener("click", () => {
+                        line1.textContent = "댓글을 삭제하시겠습니까?";
+                        line2.textContent = "삭제한 내용은 복구 할 수 없습니다.";
+                        popup.style.display = "flex";
+                        isComment = true;
+                    });
+
+                    yesButton.addEventListener("click", () => {
+                        popup.style.display = "none";
+                        if (!isComment) {
+                            window.location.href = "boardList.html";
+                        }
+                    });
+
+                    noButton.addEventListener("click", () => {
+                        popup.style.display = "none";
+                    });
+                });
+        });
+    </script>
 </head>
 <body>
     <header>아무말 대잔치</header>
