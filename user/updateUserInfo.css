@@ -59,10 +59,10 @@
 .edit-done{
     padding : 12px 20px 12px 20px;
     background-color: #ACA0EB;
-    width : 102px;
     border-radius: 30px;
     font-size: 18px;
     color: white;
     margin-top: 77px;
     text-align: center;
+    display: none;
 }
