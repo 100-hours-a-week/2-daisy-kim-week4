@@ -6,4 +6,11 @@ export const users = [
         profileImg : "../assets/img/defaultProfile.png",
         password : "!QWERqwer1",
     },
+    {
+        id : 2,
+        name : "daisy",
+        email : "scw09268@naver.com",
+        profileImg : "",
+        password : "!QWERqwer1",
+    }
 ];

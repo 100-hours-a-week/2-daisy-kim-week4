@@ -70,3 +70,13 @@
 .edit-pw-input{
     margin-bottom: 12px;
 }
+.edit-done{
+    padding : 12px 20px 12px 20px;
+    background-color: #ACA0EB;
+    border-radius: 30px;
+    font-size: 18px;
+    color: white;
+    margin-top: 77px;
+    text-align: center;
+    display: none;
+}

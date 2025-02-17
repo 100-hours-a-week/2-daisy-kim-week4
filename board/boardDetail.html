@@ -14,6 +14,7 @@
             const id = params.get('id');
             const boardItem = boardItems.find(item => item.id === parseInt(id));
 
+        
             if (boardItem) {
                 const boardDetail = document.getElementById("container");
                 boardDetail.innerHTML = `
@@ -42,15 +43,15 @@
                         <div class="board-content">${boardItem.content}</div>
                         <div class="board-reaction-info">
                             <div class="like-container">
-                                <div class="like-cnt">${boardItem.likes}</div>
+                                <div class="like-cnt">${changeCnt(boardItem.likes)}</div>
                                 <div class="like-text">좋아요수</div>
                             </div>
                             <div class="like-container">
-                                <div class="like-cnt">${boardItem.views}</div>
+                                <div class="like-cnt">${changeCnt(boardItem.views)}</div>
                                 <div class="like-text">조회수</div>
                             </div>
                             <div class="like-container">
-                                <div class="like-cnt">${boardItem.commentsCnt}</div>
+                                <div class="like-cnt">${changeCnt(boardItem.commentsCnt)}</div>
                                 <div class="like-text">댓글</div>
                             </div>
                         </div>
@@ -58,6 +59,17 @@
                 `;
             } else {
                 document.getElementById("container").innerHTML = "<p>게시글을 찾을 수 없습니다.</p>";
+            }
+
+            function changeCnt(cnt) {
+                if (cnt > 100000) {
+                    return "100k";
+                } else if (cnt > 10000) {
+                    return "10k";
+                } else if (cnt > 1000) {
+                    return "1k";
+                }
+                return cnt;
             }
 
             const commentItems = boardItem.comments;
@@ -83,6 +95,10 @@
             </div>
             `).join("");
 
+            const commentSubmit = document.querySelector(".comment-container");
+            commentSubmit.innerHTML += `
+                <input type="hidden" value="${boardItem.id}" name="id">
+            `;
         });
     </script>
             <script>
@@ -124,13 +140,13 @@
             fetch("../component/popUp.html")
                 .then(response => response.text())
                 .then(html => {
-                    const popupContainer = document.createElement("div");
-                    popupContainer.innerHTML = html;
-                    document.body.appendChild(popupContainer);
+                    document.getElementById("popup-overlay").innerHTML = html;
+
+                    const popupOverlay = document.getElementById("popup-overlay");
+                    const popup = popupOverlay.querySelector(".popup-container");
 
                     const boardDeleteButton = document.getElementById("board-delete");
                     const commentDeleteButton = document.getElementById("comment-delete");
-                    const popup = popupContainer.querySelector(".popup-container");
                     const line1 = popup.querySelector(".line1");
                     const line2 = popup.querySelector(".line2");
                     const yesButton = popup.querySelector(".ok-button");
@@ -140,22 +156,25 @@
 
                     popup.style.display = "none";
 
-                    boardDeleteButton.addEventListener("click", () => {
+                    boardDeleteButton.addEventListener("click", (event) => {
                         line1.textContent = "게시글을 삭제하시겠습니까?";
-                        line2.textContent = "삭제한 내용은 복구 할 수 없습니다.";
-                        popup.style.display = "flex";
                         isComment = false;
+                        line2.textContent = "삭제한 내용은 복구 할 수 없습니다.";
+                        popupOverlay.style.display = "block";
+                        popup.style.display = "flex";
                     });
 
-                    commentDeleteButton.addEventListener("click", () => {
+                    commentDeleteButton.addEventListener("click", (event) => {
                         line1.textContent = "댓글을 삭제하시겠습니까?";
-                        line2.textContent = "삭제한 내용은 복구 할 수 없습니다.";
-                        popup.style.display = "flex";
                         isComment = true;
+                        line2.textContent = "삭제한 내용은 복구 할 수 없습니다.";
+                        popupOverlay.style.display = "block";
+                        popup.style.display = "flex";
                     });
 
                     yesButton.addEventListener("click", () => {
                         popup.style.display = "none";
+                        popupOverlay.style.display = "none";
                         if (!isComment) {
                             window.location.href = "boardList.html";
                         }
@@ -163,6 +182,14 @@
 
                     noButton.addEventListener("click", () => {
                         popup.style.display = "none";
+                        popupOverlay.style.display = "none";
+                    });
+                    popupOverlay.addEventListener("click", (event) => {
+                        if (event.target.matches(".cancel-button, .ok-button")) {
+                            console.log("팝업 닫힘 이벤트 실행됨"); // 디버깅용 로그
+                            document.getElementById("popup-overlay").style.display = "none";
+                            document.querySelector(".popup-container").style.display = "none";
+                        }
                     });
                 });
         });
@@ -192,5 +219,6 @@
         <div id="comment-list">
         </div>
     </div>
+    <div id="popup-overlay"></div>
 </body>
 </html>

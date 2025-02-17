@@ -25,8 +25,10 @@
     font-weight: 700;
     text-align: center;
     vertical-align: middle;
+    &:hover {
+        background-color: #7f6aee;
+    }
 }
-
 #board-list{
     width: 600px;
     display: flex;
@@ -42,6 +44,10 @@
     flex-direction: column;
     padding : 24px;
     gap : 10px;
+    &:hover {
+        transform : scale(0.96);
+        transition: transform 0.1s ease;
+    }
 }
 .board-title {
     font-weight: 700;

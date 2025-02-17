@@ -54,7 +54,7 @@
                 <div class="signup-profile-container">
                     <div class="signup-profile-title">
                         <div class="signup-profile-text">프로필 사진</div>
-                        <div class="help-text">*helper-text</div>
+                        <div class="help-text" id="profile-img-helper"></div>
                     </div>
                     <div class ="signup-profile-img">
                         <img class="edit-profile-img" src="${user.profileImg}">
@@ -62,17 +62,18 @@
                         <div class="custom-profile-edit-button">
                             <label for="signup-profile-img-input" class="custom-file-label-edit">변경</label>
                         </div>
+                        <img id="profile-preview" class="profile-img-preview" src="" alt="프로필 이미지" style="display: none;">
                     </div>
                 </div>
                 <div class="edit-user-info-input">
                     <div class="login-item">
                         <div class="login-item-title">이메일*</div>
-                        <div class="user-email">${user.email}</div>
+                        <div class="user-email" id="email">${user.email}</div>
                     </div>
                     <div class="login-item">
                         <div class="login-item-title">닉네임*</div>
-                        <input class="login-item-input" type="text" placeholder="닉네임을 입력하세요" value="${user.name}">
-                        <div class="help-text">help-text</div>
+                        <input class="login-item-input" type="text" placeholder="닉네임을 입력하세요" value="${user.name}" id=nick-input>
+                        <div class="help-text" id="nick-helper-text"></div>
                     </div>
                 </div>
                 <div class="edit-submit-button">
@@ -88,11 +89,11 @@
                 fetch("../component/popUp.html")
                     .then(response => response.text())
                     .then(html => {
-                        const popupContainer = document.createElement("div");
-                        popupContainer.innerHTML = html;
-                        document.body.appendChild(popupContainer);
+                        document.getElementById("popup-overlay").innerHTML = html;
+                        const popupOverlay = document.getElementById("popup-overlay");
+                        const popup = popupOverlay.querySelector(".popup-container");
+
                         const withdrawButton = document.querySelector(".withdraw");
-                        const popup = popupContainer.querySelector(".popup-container");
                         const line1 = popup.querySelector(".line1");
                         const line2 = popup.querySelector(".line2");
                         const yesButton = popup.querySelector(".ok-button");
@@ -104,26 +105,49 @@
                             line1.textContent = "회원탈퇴 하시겠습니까?";
                             line2.textContent = "작성된 게시글과 댓글은 삭제됩니다.";
                             popup.style.display = "flex";
+                            popupOverlay.style.display = "block";
                         });
     
                         yesButton.addEventListener("click", () => {
                             popup.style.display = "none";
+                            popupOverlay.style.display = "none";
                             window.location.href = "login.html";
                         });
     
                         noButton.addEventListener("click", () => {
                             popup.style.display = "none";
+                            popupOverlay.style.display = "none";
                         });
                     });
             });
         </script>
-        <script>
+        <script type="module">           
+            import {users} from '../data/user.js';
+
             document.addEventListener("DOMContentLoaded", () => {
                 const editDone = document.querySelector(".edit-done");
                 const submitButton = document.querySelector(".login-button");
+
+                const email = document.getElementById("email");
+                const nickInput = document.getElementById("nick-input");
+                const nickHelper = document.getElementById("nick-helper-text");
+
                 submitButton.addEventListener('click', (event) => {
                     event.preventDefault();
-                    editDone.style.display = "flex";
+                    const user = users.find(item => item.name == nickInput.value && item.email !== email.textContent);
+                    if(nickInput.value.length === 0) {
+                        nickHelper.textContent = "*닉네임을 입력해 주세요.";
+                        editDone.style.display = "none";
+                    } else if (nickInput.value.length >= 11){
+                        nickHelper.textContent = "*닉네임은 최대 10자까지 작성 가능합니다.";
+                        editDone.style.display = "none";
+                    } else if (user) {
+                        nickHelper.textContent = "*중복된 닉네임입니다.";
+                        editDone.style.display = "none";
+                    } else {
+                        nickHelper.textContent ="";
+                        editDone.style.display = "flex";
+                    }
                 });
             });
         </script>
@@ -140,5 +164,6 @@
             <button class="withdraw">회원 탈퇴</button>
             <div class="edit-done">수정 완료</div>
         </div>
+        <div id="popup-overlay"></div>
     </body>
 </html>

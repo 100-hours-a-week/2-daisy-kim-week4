@@ -14,9 +14,9 @@
                     <div class="board-title">${item.title}</div>
                     <div class="board-info">
                         <div class="board-info-simple">
-                            <div class="like">좋아요 ${item.likes}</div>
-                            <div class="like">댓글 ${item.commentsCnt}</div>
-                            <div class="like">조회수 ${item.views}</div>
+                            <div class="like">좋아요 ${changeCnt(item.likes)}</div>
+                            <div class="like">댓글 ${changeCnt(item.commentsCnt)}</div>
+                            <div class="like">조회수 ${changeCnt(item.views)}</div>
                         </div>
                         <div class="time">${item.time}</div>
                     </div>
@@ -27,6 +27,17 @@
                     </div>
                 </div>
             `).join("");
+
+            function changeCnt(cnt) {
+                if (cnt > 100000) {
+                    return "100k";
+                } else if (cnt > 10000) {
+                    return "10k";
+                } else if (cnt > 1000) {
+                    return "1k";
+                }
+                return cnt;
+            }
 
             boardList.innerHTML = boardHTML;
 
