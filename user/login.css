@@ -20,12 +20,12 @@
     height: 198px;
     align-items: center;
     justify-content: center;
-    gap : 4px;
 }
 .login-item {
     display: flex;
     flex-direction: column;
     gap : 4px;
+    width : 362px;
 }
 .login-item-title {
     font-weight: 700;
