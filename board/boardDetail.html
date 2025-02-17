@@ -42,10 +42,10 @@
                         <img class="board-img" src="${boardItem.contentImg === "" ? "../assets/img/warning.png" : boardItem.contentImg}">
                         <div class="board-content">${boardItem.content}</div>
                         <div class="board-reaction-info">
-                            <div class="like-container">
-                                <div class="like-cnt">${changeCnt(boardItem.likes)}</div>
+                            <button class="like-container" id="like-box">
+                                <div class="like-cnt" id="likes">${changeCnt(boardItem.likes)}</div>
                                 <div class="like-text">좋아요수</div>
-                            </div>
+                            </button>
                             <div class="like-container">
                                 <div class="like-cnt">${changeCnt(boardItem.views)}</div>
                                 <div class="like-text">조회수</div>
@@ -60,6 +60,27 @@
             } else {
                 document.getElementById("container").innerHTML = "<p>게시글을 찾을 수 없습니다.</p>";
             }
+
+            const likes = document.getElementById("likes");
+            const likeBox = document.getElementById("like-box");
+            let isLike = getComputedStyle(likeBox).backgroundColor === "rgb(217, 217, 217)" ? false : true;
+
+            likeBox.addEventListener('click', () => {                   
+                if(!isLike) {
+                    if (!likes.textContent.includes("k")) {
+                        likes.textContent = parseInt(likes.textContent) + 1;
+                    }
+                    likeBox.style.backgroundColor = "#aca0eb";
+                    isLike = true;
+                } else {
+                    if (!likes.textContent.includes("k")) {
+                        likes.textContent = parseInt(likes.textContent) - 1;
+                    }
+                    likeBox.style.backgroundColor = "#d9d9d9";
+                    isLike = false;
+                }
+            });
+
 
             function changeCnt(cnt) {
                 if (cnt > 100000) {
