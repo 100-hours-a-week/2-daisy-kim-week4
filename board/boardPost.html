@@ -29,7 +29,7 @@
                             <div class="post-titile-input-box">
                                 <textarea class="content-input" type="text" placeholder="내용을 입력해 주세요.">${boardItem.content}</textarea>
                             </div>
-                            <div class="help-text">help-text</div>
+                            <div class="help-text"></div>
                         </div>
                         <div class="post-image">
                             <div class="post-image-title">이미지</div>
@@ -64,7 +64,7 @@
                             <div class="post-titile-input-box">
                                 <textarea class="content-input" type="text" placeholder="내용을 입력해 주세요."></textarea>
                             </div>
-                            <div class="help-text">help-text</div>
+                            <div class="help-text"></div>
                         </div>
                         <div class="post-image">
                             <div class="post-image-title">이미지</div>
@@ -75,6 +75,41 @@
                 </form>
                 `;
             }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const titleInput = document.querySelector(".post-title-input");
+                const helperText = document.querySelector(".help-text");
+                const contentInput = document.querySelector(".content-input");
+                const postButton = document.querySelector(".post-button");
+                if (titleInput.value.length > 0 && contentInput.value.length > 0) {
+                    postButton.style.backgroundColor="#7f6aee";
+                } else {
+                    postButton.style.backgroundColor="#aca0eb";
+                }
+                titleInput.addEventListener('input', () => {
+                    if (titleInput.value.length > 0 && contentInput.value.length > 0) {
+                        postButton.style.backgroundColor="#7f6aee";
+                    } else {
+                        postButton.style.backgroundColor="#aca0eb";
+                    }
+                    if(titleInput.value.length > 26) {
+                        titleInput.value = titleInput.value.slice(0,26);
+                    }
+                });
+                contentInput.addEventListener('input', () => {
+                    if (titleInput.value.length > 0 && contentInput.value.length > 0) {
+                        postButton.style.backgroundColor="#7f6aee";
+                    } else {
+                        postButton.style.backgroundColor="#aca0eb";
+                    }
+                });
+                postButton.addEventListener('click',(event) => {
+                    if (postButton.style.backgroundColor!="rgb(127, 106, 238)") { //#7f6aee
+                        event.preventDefault();
+                        helperText.textContent = "*제목, 내용을 모두 작성해 주세요.";
+                    }
+                });
+            });
         </script>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
