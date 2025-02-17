@@ -1,3 +1,4 @@
+/*공통 css*/
 body{
     width: 1920px;
     height: 1080px;
@@ -22,6 +23,9 @@ header {
     flex-direction: column;
     align-items: center;
 }
+
+
+/*헤더의 프로필 css*/
 .profile-icon {
     height : 104px;
     position: absolute;
@@ -37,6 +41,8 @@ header {
     background-color: #d9d9d9;
     cursor: pointer;
 }
+
+/*헤더의 뒤로가기 css*/
 #go-back{
     cursor : pointer;
     display: flex;
@@ -51,11 +57,16 @@ header {
     width : 40px;
     height: 40px;
 }
+
+/*helper text*/
 .help-text {
     color : red;
     font-weight: 400;
     font-size: 12px;
+    height: 15px;
 }
+
+/*헤더에서 프로필 선택 시 보이는 토글 css*/
 #toggle-frame{
     position: absolute;
     top:80px;
@@ -74,10 +85,4 @@ header {
     color: black;
     font-size: 12px;
     font-weight: 400;
-}
-
-iframe{
-    display: fixed;
-    top : 0px;
-    left: 0px;
 }
