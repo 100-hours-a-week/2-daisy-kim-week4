@@ -43,16 +43,16 @@
           isLoad = !isLoad;
         });
       });
-    </script>
-    <script type="module">
-      let id = 1;
 
-      import { users } from '../data/user.js';
-      const user = users.find((item) => item.id === parseInt(id));
+      import { getUser } from '../util/user.js';
+      import popupEvent from '../events/popupMypage.js';
 
-      if (user) {
-        const userInfo = document.getElementById('edit-user-info-wrapper');
-        userInfo.innerHTML = `
+      document.addEventListener('DOMContentLoaded', async () => {
+        const user = await getUser();
+
+        if (user) {
+          const userInfo = document.getElementById('edit-user-info-wrapper');
+          userInfo.innerHTML = `
                 <div class="signup-profile-container">
                     <div class="signup-profile-title">
                         <div class="signup-profile-text">프로필 사진</div>
@@ -82,52 +82,11 @@
                     <input class="login-button" id="signup-button" type="submit" value="수정하기">
                 </div>
                 `;
-      } else {
-        document.getElementById('edit-user-info-wrapper').innerHTML =
-          '<p>사용자 정보를 찾을 수 없습니다.</p>';
-      }
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        fetch('../component/popUp.html')
-          .then((response) => response.text())
-          .then((html) => {
-            document.getElementById('popup-overlay').innerHTML = html;
-            const popupOverlay = document.getElementById('popup-overlay');
-            const popup = popupOverlay.querySelector('.popup-container');
+        } else {
+          document.getElementById('edit-user-info-wrapper').innerHTML =
+            '<p>사용자 정보를 찾을 수 없습니다.</p>';
+        }
 
-            const withdrawButton = document.querySelector('.withdraw');
-            const line1 = popup.querySelector('.line1');
-            const line2 = popup.querySelector('.line2');
-            const yesButton = popup.querySelector('.ok-button');
-            const noButton = popup.querySelector('.cancel-button');
-
-            popup.style.display = 'none';
-
-            withdrawButton.addEventListener('click', () => {
-              line1.textContent = '회원탈퇴 하시겠습니까?';
-              line2.textContent = '작성된 게시글과 댓글은 삭제됩니다.';
-              popup.style.display = 'flex';
-              popupOverlay.style.display = 'block';
-            });
-
-            yesButton.addEventListener('click', () => {
-              popup.style.display = 'none';
-              popupOverlay.style.display = 'none';
-              window.location.href = 'login.html';
-            });
-
-            noButton.addEventListener('click', () => {
-              popup.style.display = 'none';
-              popupOverlay.style.display = 'none';
-            });
-          });
-      });
-    </script>
-    <script type="module">
-      import { users } from '../data/user.js';
-
-      document.addEventListener('DOMContentLoaded', () => {
         const editDone = document.querySelector('.edit-done');
         const submitButton = document.querySelector('.login-button');
 
@@ -137,18 +96,12 @@
 
         submitButton.addEventListener('click', (event) => {
           event.preventDefault();
-          const user = users.find(
-            (item) =>
-              item.name == nickInput.value && item.email !== email.textContent
-          );
+
           if (nickInput.value.length === 0) {
             nickHelper.textContent = '*닉네임을 입력해 주세요.';
             editDone.style.display = 'none';
           } else if (nickInput.value.length >= 11) {
             nickHelper.textContent = '*닉네임은 최대 10자까지 작성 가능합니다.';
-            editDone.style.display = 'none';
-          } else if (user) {
-            nickHelper.textContent = '*중복된 닉네임입니다.';
             editDone.style.display = 'none';
           } else {
             nickHelper.textContent = '';

@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="boardList.css" />
     <title>게시글 목록</title>
     <script type="module">
-      import { boardItems } from '../data/board.js';
       import goMainAction from '../events/header.js';
+      import { getBoard } from '../util/boardList.js';
+      document.addEventListener('DOMContentLoaded', async () => {
+        const boardItems = await getBoard();
 
-      const boardList = document.getElementById('board-list');
-      const boardHTML = boardItems
-        .map(
-          (item) => `
+        const boardList = document.getElementById('board-list');
+        const boardHTML = boardItems
+          .map(
+            (item) => `
                 <div class="board-item" board-id="${item.id}">
                     <div class="board-title">${item.title}</div>
                     <div class="board-info">
@@ -41,27 +43,28 @@
                     </div>
                 </div>
             `
-        )
-        .join('');
+          )
+          .join('');
 
-      function changeCnt(cnt) {
-        if (cnt > 100000) {
-          return '100k';
-        } else if (cnt > 10000) {
-          return '10k';
-        } else if (cnt > 1000) {
-          return '1k';
+        function changeCnt(cnt) {
+          if (cnt > 100000) {
+            return '100k';
+          } else if (cnt > 10000) {
+            return '10k';
+          } else if (cnt > 1000) {
+            return '1k';
+          }
+          return cnt;
         }
-        return cnt;
-      }
 
-      boardList.innerHTML = boardHTML;
+        boardList.innerHTML = boardHTML;
 
-      const boardItemsElements = document.querySelectorAll('.board-item');
-      boardItemsElements.forEach((item) => {
-        item.addEventListener('click', () => {
-          const id = item.getAttribute('board-id');
-          window.location.href = `boardDetail.html?id=${id}`;
+        const boardItemsElements = document.querySelectorAll('.board-item');
+        boardItemsElements.forEach((item) => {
+          item.addEventListener('click', () => {
+            const id = item.getAttribute('board-id');
+            window.location.href = `boardDetail.html?id=${id}`;
+          });
         });
       });
     </script>
