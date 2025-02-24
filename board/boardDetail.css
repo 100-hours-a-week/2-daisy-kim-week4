@@ -44,9 +44,10 @@
 .board-item-edit-button {
   width: 50px;
   height: 27px;
+  line-height: 27px;
   border-radius: 8px;
   border: solid 1px #aca0eb;
-  padding: 2px 12px 2px 12px;
+  padding: 0px 12px 0px 12px;
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
@@ -60,9 +61,10 @@
 .comment-edit {
   width: 50px;
   height: 27px;
+  line-height: 27px;
   border-radius: 8px;
   border: solid 1px #aca0eb;
-  padding: 2px 12px 2px 12px;
+  padding: 0px 12px 0px 12px;
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;

@@ -9,7 +9,6 @@ const popupEvent = document.addEventListener('DOMContentLoaded', () => {
       const withdrawButton = document.querySelector('.withdraw');
       const line1 = popup.querySelector('.line1');
       const line2 = popup.querySelector('.line2');
-
       popup.style.display = 'none';
 
       withdrawButton.addEventListener('click', () => {
@@ -23,6 +22,9 @@ const popupEvent = document.addEventListener('DOMContentLoaded', () => {
         if (event.target.matches('.cancel-button, .ok-button')) {
           document.getElementById('popup-overlay').style.display = 'none';
           document.querySelector('.popup-container').style.display = 'none';
+        }
+        if (event.target.matches('.ok-button')) {
+          window.location.href = 'login.html';
         }
       });
     });
