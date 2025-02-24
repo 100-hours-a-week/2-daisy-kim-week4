@@ -21,9 +21,9 @@ async function getBoardDetail(boardItem) {
                     <div class="board-item-info-right">
                       ${
                         boardItem.isMyPost
-                          ? `<button class="board-item-edit-button">
-                            <a href="boardPost.html?id=${boardItem.id}">수정</a>
-                        </button>
+                          ? `<a href="boardPost.html?id=${boardItem.id}"><button class="board-item-edit-button">
+                            수정
+                        </button></a>
                         <button class="board-item-edit-button" id = "board-delete">
                             삭제
                         </button>`

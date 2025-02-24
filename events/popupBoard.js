@@ -15,6 +15,8 @@ const popupEvent = document.addEventListener('DOMContentLoaded', async () => {
       setTimeout(() => {
         const boardDeleteButton = document.getElementById('board-delete');
         const commentDeleteButton = document.getElementById('comment-delete');
+        const yesButton = popup.querySelector('.ok-button');
+        let isComment = false;
 
         if (boardDeleteButton) {
           boardDeleteButton.addEventListener('click', (event) => {
@@ -34,6 +36,13 @@ const popupEvent = document.addEventListener('DOMContentLoaded', async () => {
             popup.style.display = 'flex';
           });
         }
+
+        yesButton.addEventListener('click', () => {
+          if (!isComment) {
+            window.location.href = 'boardList.html';
+          }
+        });
+
         popupOverlay.addEventListener('click', (event) => {
           if (event.target.matches('.cancel-button, .ok-button')) {
             document.getElementById('popup-overlay').style.display = 'none';

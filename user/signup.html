@@ -1,195 +1,239 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel = "stylesheet" href="../commonStyle.css">
-        <link rel = "stylesheet" href="./signup.css">
-        <link rel="stylesheet" href="./login.css">
-        <title>커뮤니티 회원가입</title>
-        <script type="module">
-            import {users} from '../data/user.js';
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../commonStyle.css" />
+    <link rel="stylesheet" href="./signup.css" />
+    <link rel="stylesheet" href="./login.css" />
+    <title>커뮤니티 회원가입</title>
+    <script type="module">
+      import { users } from '../data/user.js';
+      import { validatePw, validatePwCheck } from '../events/pwHelperEvent.js';
 
-            document.addEventListener("DOMContentLoaded", () => {
-                const fileInput = document.getElementById("signup-profile-img-input");
-                const label = document.querySelector(".custom-file-label");
-                const preview = document.getElementById("profile-preview");
-                const profileHelper = document.getElementById("profile-img-helper");
-                profileHelper.textContent = "*프로필 사진을 추가해 주세요.";
+      document.addEventListener('DOMContentLoaded', () => {
+        const fileInput = document.getElementById('signup-profile-img-input');
+        const label = document.querySelector('.custom-file-label');
+        const preview = document.getElementById('profile-preview');
+        const profileHelper = document.getElementById('profile-img-helper');
+        profileHelper.textContent = '*프로필 사진을 추가해 주세요.';
 
-                fileInput.addEventListener("change", (event) => {
-                    const file = event.target.files[0];
+        fileInput.addEventListener('change', (event) => {
+          const file = event.target.files[0];
 
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            preview.src = e.target.result;
-                            preview.style.display = "block";
-                            label.style.color = "transparent";
-                            profileHelper.textContent = "";
-                        };
-                        reader.readAsDataURL(file);
-                    } else {
-                        preview.style.display = "none";
-                        label.style.color = "black";
-                        profileHelper.textContent = "*프로필 사진을 추가해 주세요.";
-                    }
-                });                
-
-                const emailInput = document.getElementById("email-input");
-                const emailHelper = document.getElementById("email-helper-text");
-    
-                const pwInput = document.getElementById("pw-input");
-                const pwHelper = document.getElementById("pw-helper-text");
-                
-                const pwCheck = document.getElementById("pw-check");
-                const pwCheckHelper = document.getElementById("pw-check-helper-text");
-
-                const nickInput = document.getElementById("nick-input");
-                const nickHelper = document.getElementById("nick-helper-text");
-
-                function validateEmail(email) {
-                    const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
-                    if (email.length === 0) {
-                        return "*이메일을 입력해 주세요.";
-                    } else if (email.length < 5 || email.length > 50 || !emailRegex.test(email)) {
-                        return "*올바른 이메일 주소 형식을 입력해 주세요.(예 : example@example.com)";
-                    }
-                    return "";
-                }
-    
-                function validatePw(pw) {
-                    const pwRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
-                    if(pw.length == 0) {
-                        return "*비밀번호를 입력해 주세요.";
-                    } else if (!pwRegex.test(pw)) {
-                        return "*비밀번호는 8자 이상 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다."
-                    }
-                    return "";
-                }
-    
-                const loginButton = document.querySelector(".login-button");
-    
-                emailInput.addEventListener('input', () => {
-                    emailHelper.textContent = validateEmail(emailInput.value);
-                    if (validateEmail(emailInput.value) == "" && validatePw(pwInput.value) == "" && validatePwCheck(pwCheck.value) == "" && validateNick(nickInput.value) == "" && profileHelper.textContent=="") {
-                        loginButton.style.backgroundColor = "#7f6aee";
-                    } else {
-                        loginButton.style.backgroundColor = "#aca0eb";
-                    }
-                });
-                pwInput.addEventListener('input', () => {
-                    pwHelper.textContent = validatePw(pwInput.value);
-                    pwCheckHelper.textContent = validatePwCheck(pwCheck.value);
-                    if (validateEmail(emailInput.value) == "" && validatePw(pwInput.value) == "" && validatePwCheck(pwCheck.value) == "" && validateNick(nickInput.value) == "" && profileHelper.textContent=="") {
-                        loginButton.style.backgroundColor = "#7f6aee";
-                    } else {
-                        loginButton.style.backgroundColor = "#aca0eb";
-                    }
-                });
-    
-                loginButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    if (loginButton.style.backgroundColor == "rgb(127, 106, 238)") { //#7f6aee
-                        window.location.href = "login.html";
-                    }
-                });
-
-
-                function validatePwCheck(pw_check) {
-                    if(pw_check.length == 0) {
-                        return "*비밀번호를 한 번 더 입력해 주세요.";
-                    } else if(pw_check !== pwInput.value) {
-                        return "*비밀번호가 다릅니다.";
-                    } 
-                    return "";
-                }
-
-                function validateNick(nickName) {
-                    const nl = nickName.length;
-                    const user = users.find(item => item.name === nickName);
-
-                    if (nl === 0) {
-                        return "*닉네임을 입력해 주세요.";
-                    } else if (nl >= 11) {
-                        return "*닉네임은 최대 10자까지 작성 가능합니다.";
-                    } else if (nickInput.value.includes(" ")) {
-                        return "*띄어쓰기를 없애주세요.";
-                    } else if(user) {
-                        return "*중복된 닉네임입니다.";
-                    } 
-                    return "";
-                }
-
-                pwCheck.addEventListener('input', () => {
-                    pwCheckHelper.textContent = validatePwCheck(pwCheck.value);
-                    if (validateEmail(emailInput.value) == "" && validatePw(pwInput.value) == "" && validatePwCheck(pwCheck.value) == "" && validateNick(nickInput.value) == "" && profileHelper.textContent=="") {
-                        loginButton.style.backgroundColor = "#7f6aee";
-                    } else {
-                        loginButton.style.backgroundColor = "#aca0eb";
-                    }
-                });
-
-                nickInput.addEventListener('input', () => {
-                    nickHelper.textContent = validateNick(nickInput.value);
-                    if (validateEmail(emailInput.value) == "" && validatePw(pwInput.value) == "" && validatePwCheck(pwCheck.value) == "" && validateNick(nickInput.value) == "" && profileHelper.textContent=="") {
-                        loginButton.style.backgroundColor = "#7f6aee";
-                    } else {
-                        loginButton.style.backgroundColor = "#aca0eb";
-                    }
-                });
-    
-            });
-        </script>
-    </head>
-    <body>
-        <header>아무말 대잔치</header>
-        <div id="go-back"><img class="go-back-img" src="../assets/img/backButton.png"></div>
-        <script>
-            const backButton = document.getElementById("go-back");
-            backButton.addEventListener("click", () => {
-            window.history.back();
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              preview.src = e.target.result;
+              preview.style.display = 'block';
+              label.style.color = 'transparent';
+              profileHelper.textContent = '';
+            };
+            reader.readAsDataURL(file);
+          } else {
+            preview.style.display = 'none';
+            label.style.color = 'black';
+            profileHelper.textContent = '*프로필 사진을 추가해 주세요.';
+          }
         });
-        </script>
-        <div class="wrapper">
-            <div class="signup-title">회원가입</div>
-            <form class="signup-wrapper">
-                <div class="signup-profile-container">
-                    <div class="signup-profile-title">
-                        <div class="signup-profile-text">프로필 사진</div>
-                        <div class="help-text" id="profile-img-helper"></div>
-                    </div>
-                    <div class ="signup-profile-img">
-                        <input type="file" id="signup-profile-img-input">
-                        <label for="signup-profile-img-input" class="custom-file-label">+</label>
-                        <img id="profile-preview" class="profile-img-preview" src="" alt="프로필 이미지" style="display: none;">
-                    </div>
-                </div>
-                <div class="signup-input-wrapper">
-                    <div class="login-item">
-                        <div class="login-item-title">이메일*</div>
-                        <input class="login-item-input" type="text" placeholder="이메일을 입력하세요" id="email-input">
-                        <div class="help-text" id="email-helper-text"></div>
-                    </div>
-                    <div class="login-item">
-                        <div class="login-item-title">비밀번호*</div>
-                        <input class="login-item-input" type="password" placeholder="비밀번호를 입력하세요" id="pw-input">
-                        <div class="help-text" id="pw-helper-text"></div>
-                    </div>
-                    <div class="login-item">
-                        <div class="login-item-title">비밀번호 확인*</div>
-                        <input class="login-item-input" type="password" placeholder="비밀번호를 한 번 더 입력하세요" id="pw-check">
-                        <div class="help-text" id="pw-check-helper-text"></div>
-                    </div>
-                    <div class="login-item">
-                        <div class="login-item-title">닉네임*</div>
-                        <input class="login-item-input" type="text" placeholder="닉네임을 입력하세요" id="nick-input">
-                        <div class="help-text" id="nick-helper-text"></div>
-                    </div>
-                </div>
-                <input class="login-button" id="signup-button" type="submit" value="회원가입">
-            </form>
-            <a class="go-to-signup" href="./login.html">로그인하러 가기</a>
+
+        const emailInput = document.getElementById('email-input');
+        const emailHelper = document.getElementById('email-helper-text');
+
+        const pwInput = document.getElementById('pw-input');
+        const pwHelper = document.getElementById('pw-helper-text');
+
+        const pwCheck = document.getElementById('pw-check');
+        const pwCheckHelper = document.getElementById('pw-check-helper-text');
+
+        const nickInput = document.getElementById('nick-input');
+        const nickHelper = document.getElementById('nick-helper-text');
+
+        function validateEmail(email) {
+          const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
+          if (email.length === 0) {
+            return '*이메일을 입력해 주세요.';
+          } else if (
+            email.length < 5 ||
+            email.length > 50 ||
+            !emailRegex.test(email)
+          ) {
+            return '*올바른 이메일 주소 형식을 입력해 주세요.(예 : example@example.com)';
+          }
+          return '';
+        }
+
+        const loginButton = document.querySelector('.login-button');
+
+        emailInput.addEventListener('input', () => {
+          emailHelper.textContent = validateEmail(emailInput.value);
+          if (
+            validateEmail(emailInput.value) == '' &&
+            validatePw(pwInput.value) == '' &&
+            validatePwCheck(pwCheck.value) == '' &&
+            validateNick(nickInput.value) == '' &&
+            profileHelper.textContent == ''
+          ) {
+            loginButton.style.backgroundColor = '#7f6aee';
+          } else {
+            loginButton.style.backgroundColor = '#aca0eb';
+          }
+        });
+        pwInput.addEventListener('input', () => {
+          pwHelper.textContent = validatePw(pwInput.value);
+          pwCheckHelper.textContent = validatePwCheck(pwCheck.value);
+          if (
+            validateEmail(emailInput.value) == '' &&
+            validatePw(pwInput.value) == '' &&
+            validatePwCheck(pwCheck.value) == '' &&
+            validateNick(nickInput.value) == '' &&
+            profileHelper.textContent == ''
+          ) {
+            loginButton.style.backgroundColor = '#7f6aee';
+          } else {
+            loginButton.style.backgroundColor = '#aca0eb';
+          }
+        });
+
+        loginButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          if (loginButton.style.backgroundColor == 'rgb(127, 106, 238)') {
+            //#7f6aee
+            window.location.href = 'login.html';
+          }
+        });
+
+        function validateNick(nickName) {
+          const nl = nickName.length;
+          const user = users.find((item) => item.name === nickName);
+
+          if (nl === 0) {
+            return '*닉네임을 입력해 주세요.';
+          } else if (nl >= 11) {
+            return '*닉네임은 최대 10자까지 작성 가능합니다.';
+          } else if (nickInput.value.includes(' ')) {
+            return '*띄어쓰기를 없애주세요.';
+          } else if (user) {
+            return '*중복된 닉네임입니다.';
+          }
+          return '';
+        }
+
+        pwCheck.addEventListener('input', () => {
+          pwCheckHelper.textContent = validatePwCheck(pwCheck.value);
+          if (
+            validateEmail(emailInput.value) == '' &&
+            validatePw(pwInput.value) == '' &&
+            validatePwCheck(pwCheck.value) == '' &&
+            validateNick(nickInput.value) == '' &&
+            profileHelper.textContent == ''
+          ) {
+            loginButton.style.backgroundColor = '#7f6aee';
+          } else {
+            loginButton.style.backgroundColor = '#aca0eb';
+          }
+        });
+
+        nickInput.addEventListener('input', () => {
+          nickHelper.textContent = validateNick(nickInput.value);
+          if (
+            validateEmail(emailInput.value) == '' &&
+            validatePw(pwInput.value) == '' &&
+            validatePwCheck(pwCheck.value) == '' &&
+            validateNick(nickInput.value) == '' &&
+            profileHelper.textContent == ''
+          ) {
+            loginButton.style.backgroundColor = '#7f6aee';
+          } else {
+            loginButton.style.backgroundColor = '#aca0eb';
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header>아무말 대잔치</header>
+    <div id="go-back">
+      <img class="go-back-img" src="../assets/img/backButton.png" />
+    </div>
+    <script>
+      const backButton = document.getElementById('go-back');
+      backButton.addEventListener('click', () => {
+        window.history.back();
+      });
+    </script>
+    <div class="wrapper">
+      <div class="signup-title">회원가입</div>
+      <form class="signup-wrapper">
+        <div class="signup-profile-container">
+          <div class="signup-profile-title">
+            <div class="signup-profile-text">프로필 사진</div>
+            <div class="help-text" id="profile-img-helper"></div>
+          </div>
+          <div class="signup-profile-img">
+            <input type="file" id="signup-profile-img-input" />
+            <label for="signup-profile-img-input" class="custom-file-label"
+              >+</label
+            >
+            <img
+              id="profile-preview"
+              class="profile-img-preview"
+              src=""
+              alt="프로필 이미지"
+              style="display: none"
+            />
+          </div>
         </div>
-    </body>
+        <div class="signup-input-wrapper">
+          <div class="login-item">
+            <div class="login-item-title">이메일*</div>
+            <input
+              class="login-item-input"
+              type="text"
+              placeholder="이메일을 입력하세요"
+              id="email-input"
+            />
+            <div class="help-text" id="email-helper-text"></div>
+          </div>
+          <div class="login-item">
+            <div class="login-item-title">비밀번호*</div>
+            <input
+              class="login-item-input"
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              id="pw-input"
+            />
+            <div class="help-text" id="pw-helper-text"></div>
+          </div>
+          <div class="login-item">
+            <div class="login-item-title">비밀번호 확인*</div>
+            <input
+              class="login-item-input"
+              type="password"
+              placeholder="비밀번호를 한 번 더 입력하세요"
+              id="pw-check"
+            />
+            <div class="help-text" id="pw-check-helper-text"></div>
+          </div>
+          <div class="login-item">
+            <div class="login-item-title">닉네임*</div>
+            <input
+              class="login-item-input"
+              type="text"
+              placeholder="닉네임을 입력하세요"
+              id="nick-input"
+            />
+            <div class="help-text" id="nick-helper-text"></div>
+          </div>
+        </div>
+        <input
+          class="login-button"
+          id="signup-button"
+          type="submit"
+          value="회원가입"
+        />
+      </form>
+      <a class="go-to-signup" href="./login.html">로그인하러 가기</a>
+    </div>
+  </body>
 </html>

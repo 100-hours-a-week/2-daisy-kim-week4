@@ -10,46 +10,18 @@
     <title>회원 정보 수정</title>
     <script type="module">
       import goMainAction from '../events/header.js';
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const myPageButton = document.querySelector('.profile-img');
-        const toggle = document.getElementById('toggle-frame');
-
-        let isLoad = false;
-        myPageButton.addEventListener('click', () => {
-          if (!isLoad) {
-            toggle.innerHTML = `
-                        <div class="edit-button">
-                            <a href="../user/updateUserInfo.html" class="edit-button-text">
-                                회원정보 수정
-                            </a>
-                        </div>
-                        <div class="edit-button">
-                            <a href="../user/updatePassword.html" class="edit-button-text">
-                                비밀번호 수정
-                            </a>
-                        </div>
-                        <div class="edit-button">
-                            <a href="../user/login.html" class="edit-button-text">
-                                로그아웃
-                            </a>
-                        </div>
-                    `;
-            toggle.style.display = 'block';
-          } else {
-            toggle.innerHTML = '';
-            toggle.style.display = 'none';
-          }
-          isLoad = !isLoad;
-        });
-      });
-
+      import { myPageToggle } from '../component/myPageToggle.js';
       import { getUser } from '../util/user.js';
       import popupEvent from '../events/popupMypage.js';
+      import { nickNameHelperEvent } from '../events/nicknameHelperEvent.js';
 
       document.addEventListener('DOMContentLoaded', async () => {
+        myPageToggle();
         const user = await getUser();
 
+        setTimeout(() => {
+          nickNameHelperEvent();
+        }, 100);
         if (user) {
           const userInfo = document.getElementById('edit-user-info-wrapper');
           userInfo.innerHTML = `
@@ -86,28 +58,6 @@
           document.getElementById('edit-user-info-wrapper').innerHTML =
             '<p>사용자 정보를 찾을 수 없습니다.</p>';
         }
-
-        const editDone = document.querySelector('.edit-done');
-        const submitButton = document.querySelector('.login-button');
-
-        const email = document.getElementById('email');
-        const nickInput = document.getElementById('nick-input');
-        const nickHelper = document.getElementById('nick-helper-text');
-
-        submitButton.addEventListener('click', (event) => {
-          event.preventDefault();
-
-          if (nickInput.value.length === 0) {
-            nickHelper.textContent = '*닉네임을 입력해 주세요.';
-            editDone.style.display = 'none';
-          } else if (nickInput.value.length >= 11) {
-            nickHelper.textContent = '*닉네임은 최대 10자까지 작성 가능합니다.';
-            editDone.style.display = 'none';
-          } else {
-            nickHelper.textContent = '';
-            editDone.style.display = 'flex';
-          }
-        });
       });
     </script>
   </head>

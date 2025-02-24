@@ -1,104 +1,104 @@
 /*공통 css*/
-body{
-    width: 1920px;
-    height: 1080px;
-    background-color: #F4F5F7;
-    margin-left: 0px;
+body {
+  width: 1920px;
+  height: 1080px;
+  background-color: #f4f5f7;
+  margin-left: 0px;
 }
 header {
-    height : 104px;
-    width : 1920px;
-    line-height: 104px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 32px;
-    border-width: 0px 0px 1px 0px;
-    border-style: solid;
-    font-weight: 400;
-    position: absolute;
-    top : 0px;
+  height: 104px;
+  width: 1920px;
+  line-height: 104px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 32px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  font-weight: 400;
+  position: absolute;
+  top: 0px;
 }
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
 
 /*헤더의 프로필 css*/
 .profile-icon {
-    height : 104px;
-    position: absolute;
-    left : 1196px;
-    top : 0px;
-    display: flex;
-    align-items: center;
+  height: 104px;
+  position: absolute;
+  left: 1196px;
+  top: 0px;
+  display: flex;
+  align-items: center;
 }
-.profile-img{
-    width : 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #d9d9d9;
-    cursor: pointer;
+.profile-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+  cursor: pointer;
 }
 
 /*헤더의 뒤로가기 css*/
-#go-back{
-    cursor : pointer;
-    display: flex;
-    position : absolute;
-    top : 0px;
-    width : 40px;
-    height: 104px;
-    left : 684px;
-    align-items: center;
+#go-back {
+  cursor: pointer;
+  display: flex;
+  position: absolute;
+  top: 0px;
+  width: 40px;
+  height: 104px;
+  left: 684px;
+  align-items: center;
 }
-.go-back-img{
-    width : 40px;
-    height: 40px;
+.go-back-img {
+  width: 40px;
+  height: 40px;
 }
 
 /*helper text*/
 .help-text {
-    color : red;
-    font-weight: 400;
-    font-size: 12px;
-    min-height: 15px;
-    margin : 4px 0px 4px 0px;
+  color: red;
+  font-weight: 400;
+  font-size: 12px;
+  min-height: 15px;
+  margin: 4px 0px 4px 0px;
 }
 
 /*헤더에서 프로필 선택 시 보이는 토글 css*/
-#toggle-frame{
-    position: absolute;
-    top:80px;
-    left: 1118px;
-    display: none;
-    width : 115px;
+#toggle-frame {
+  position: absolute;
+  top: 80px;
+  left: 1118px;
+  display: none;
+  width: 115px;
 }
-.edit-button{
-    padding: 10px 24px 10px 24px;
-    background-color: #d9d9d9;
-    text-align: center;
-    cursor: pointer;
-    &:hover {
-        background-color: #e9e9e9;
-    }
+.edit-button {
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 }
-.edit-button-text{
-    text-decoration: none;
-    color: black;
-    font-size: 12px;
-    font-weight: 400;
+.edit-button-text {
+  background-color: #d9d9d9;
+  color: black;
+  padding: 10px 24px 10px 24px;
+  font-size: 12px;
+  font-weight: 400;
+  vertical-align: middle;
+  &:hover {
+    background-color: #e9e9e9;
+  }
 }
 
 /*팝업*/
 #popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #00000050;
-    display: none;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000050;
+  display: none;
+  z-index: 1000;
 }
