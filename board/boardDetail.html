@@ -7,215 +7,56 @@
     <link rel="stylesheet" href="./boardDetail.css" />
     <title>게시글 상세 보기</title>
     <script type="module">
-      import { boardItems } from '../data/board.js';
       import goMainAction from '../events/header.js';
       import popupEvent from '../events/popupBoard.js';
-
+      import {
+        commentSubmitButtonEvent,
+        likeButtonEvent,
+      } from '../events/buttonEvent.js';
       import { getBoardInfo } from '../util/boardInfo.js';
       import { getComments } from '../util/comment.js';
+      import { myPageToggle } from '../component/myPageToggle.js';
+      import { getBoardDetail } from '../component/boardDetailInfo.js';
+      import { commentListComponent } from '../component/commentList.js';
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const commentInput = document.querySelector('.comment-input');
-        const commentButton = document.querySelector(
-          '.comment-register-button'
-        );
-
-        commentInput.addEventListener('input', () => {
-          if (commentInput.value.length > 0) {
-            commentButton.style.background = '#7f6aee';
-          } else {
-            commentButton.style.background = '#aca0eb';
-          }
-        });
-      });
       document.addEventListener('DOMContentLoaded', async () => {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
         const boardItem = await getBoardInfo(id);
+        getBoardDetail(boardItem);
+        const commentItems = await getComments(id);
+        commentListComponent(commentItems);
 
-        if (boardItem) {
-          const boardDetail = document.getElementById('container');
-          boardDetail.innerHTML = `
-                    <div class="title-header">
-                        <div class="title">${boardItem.title}</div>
-                        <div class="board-item-info">
-                            <div class="board-item-info-left">
-                                <div class="profile-img">
-                                    <img class="profile-img" src="${
-                                      boardItem.profileImg === ''
-                                        ? '../assets/img/defaultProfile.png'
-                                        : boardItem.profileImg
-                                    }">
-                                </div>
-                                <div class="profile-name">${
-                                  boardItem.writer
-                                }</div>
-                                <div class="written-time">${
-                                  boardItem.time
-                                }</div>
-                            </div>
-                            <div class="board-item-info-right">
-                              ${
-                                boardItem.isMyPost
-                                  ? `<button class="board-item-edit-button">
-                                    <a href="boardPost.html?id=${boardItem.id}">수정</a>
-                                </button>
-                                <button class="board-item-edit-button" id = "board-delete">
-                                    삭제
-                                </button>`
-                                  : ''
-                              }
-                            </div>
-                        </div>
-                    </div>
-                    <div class="board-body">
-                        <img class="board-img" src="${
-                          boardItem.contentImg === ''
-                            ? '../assets/img/warning.png'
-                            : boardItem.contentImg
-                        }">
-                        <div class="board-content">${boardItem.content}</div>
-                        <div class="board-reaction-info">
-                            <button class="like-container" id="like-box">
-                                <div class="like-cnt" id="likes">${changeCnt(
-                                  boardItem.likes
-                                )}</div>
-                                <div class="like-text">좋아요수</div>
-                            </button>
-                            <div class="like-container">
-                                <div class="like-cnt">${changeCnt(
-                                  boardItem.views
-                                )}</div>
-                                <div class="like-text">조회수</div>
-                            </div>
-                            <div class="like-container">
-                                <div class="like-cnt">${changeCnt(
-                                  boardItem.commentsCnt
-                                )}</div>
-                                <div class="like-text">댓글</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-        } else {
-          document.getElementById('container').innerHTML =
-            '<p>게시글을 찾을 수 없습니다.</p>';
-        }
+        likeButtonEvent();
+        myPageToggle();
 
-        const likes = document.getElementById('likes');
-        const likeBox = document.getElementById('like-box');
-        let isLike =
-          getComputedStyle(likeBox).backgroundColor === 'rgb(217, 217, 217)'
-            ? false
-            : true;
+        //수정 버튼 아니고 그냥 댓글 입력 생성됐을 때 이벤트
+        setTimeout(() => {
+          commentSubmitButtonEvent();
+        }, 100);
 
-        likeBox.addEventListener('click', () => {
-          if (!isLike) {
-            if (!likes.textContent.includes('k')) {
-              likes.textContent = parseInt(likes.textContent) + 1;
-            }
-            likeBox.style.backgroundColor = '#aca0eb';
-            isLike = true;
-          } else {
-            if (!likes.textContent.includes('k')) {
-              likes.textContent = parseInt(likes.textContent) - 1;
-            }
-            likeBox.style.backgroundColor = '#d9d9d9';
-            isLike = false;
-          }
-        });
-
-        function changeCnt(cnt) {
-          if (cnt > 100000) {
-            return '100k';
-          } else if (cnt > 10000) {
-            return '10k';
-          } else if (cnt > 1000) {
-            return '1k';
-          }
-          return cnt;
-        }
-
-        const commentItems = boardItem.comments;
-        const commentList = document.getElementById('comment-list');
-        commentList.innerHTML = commentItems
-          .map(
-            (item, index) => `
-            <div class="comment-item">
-                <div class="comment-list-right">
-                    <div class="comment-top">
-                        <div class="comment-writer-profile">
-                            <img class="comment-writer-profile-img" src="../assets/img/defaultProfile.png">
-                        </div>
-                        <div class="comment-writer-name">${item.writer}</div>
-                        <div class="written-time">${item.time}</div>
-                    </div>
-                    <div class="comment-bottom">
-                        ${item.content}
-                    </div>
-                </div>
-                <div class="comment-buttons">
-                  ${
-                    item.isMyComent === true
-                      ? `<button class="comment-edit" data-index="${index}">수정</button>
-                    <button class="board-item-edit-button" id="comment-delete">삭제</button>`
-                      : ''
-                  }
-                </div>
-            </div>
-            `
-          )
-          .join('');
-
+        //수정 버튼 눌렀을 때 이벤트
         document.querySelectorAll('.comment-edit').forEach((editButton) => {
           editButton.addEventListener('click', (event) => {
             const commentInput = document.querySelector('.comment-input');
+            const commentButton = document.querySelector(
+              '.comment-register-button'
+            );
             const index = event.target.dataset.index;
             commentInput.value = commentItems[index].content;
+            commentButton.style.background = '#7f6aee';
           });
         });
 
+        //댓글 등록으로 페이지 새로고침할 때 필요한 요소 hidden으로 함께 제출하기
         const commentSubmit = document.querySelector('.comment-container');
         commentSubmit.innerHTML += `
                 <input type="hidden" value="${boardItem.id}" name="id">
             `;
       });
     </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const myPageButton = document.querySelector('.profile-img');
-        const toggle = document.getElementById('toggle-frame');
-
-        let isLoad = false;
-        myPageButton.addEventListener('click', () => {
-          if (!isLoad) {
-            toggle.innerHTML = `
-                            <div class="edit-button">
-                                <a href="../user/updateUserInfo.html" class="edit-button-text">
-                                    회원정보 수정
-                                </a>
-                            </div>
-                            <div class="edit-button">
-                                <a href="../user/updatePassword.html" class="edit-button-text">
-                                    비밀번호 수정
-                                </a>
-                            </div>
-                            <div class="edit-button">
-                                <a href="../user/login.html" class="edit-button-text">
-                                    로그아웃
-                                </a>
-                            </div>
-                        `;
-            toggle.style.display = 'block';
-          } else {
-            toggle.innerHTML = '';
-            toggle.style.display = 'none';
-          }
-          isLoad = !isLoad;
-        });
-      });
-    </script>
   </head>
+
   <body>
     <header id="header" style="cursor: pointer">아무말 대잔치</header>
     <div id="go-back">
