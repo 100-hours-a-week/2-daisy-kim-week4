@@ -8,7 +8,6 @@ const popupEvent = document.addEventListener('DOMContentLoaded', async () => {
       const popup = popupOverlay.querySelector('.popup-container');
       const line1 = popup.querySelector('.line1');
       const line2 = popup.querySelector('.line2');
-      let isComment = false;
 
       popup.style.display = 'none';
 
