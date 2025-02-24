@@ -9,8 +9,11 @@
     <script type="module">
       import goMainAction from '../events/header.js';
       import { getBoard } from '../util/boardList.js';
+      import { myPageToggle } from '../component/myPageToggle.js';
+
       document.addEventListener('DOMContentLoaded', async () => {
         const boardItems = await getBoard();
+        myPageToggle();
 
         const boardList = document.getElementById('board-list');
         const boardHTML = boardItems
@@ -65,40 +68,6 @@
             const id = item.getAttribute('board-id');
             window.location.href = `boardDetail.html?id=${id}`;
           });
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const myPageButton = document.querySelector('.profile-img');
-        const toggle = document.getElementById('toggle-frame');
-
-        let isLoad = false;
-        myPageButton.addEventListener('click', () => {
-          if (!isLoad) {
-            toggle.innerHTML = `
-                        <div class="edit-button">
-                            <a href="../user/updateUserInfo.html" class="edit-button-text">
-                                회원정보 수정
-                            </a>
-                        </div>
-                        <div class="edit-button">
-                            <a href="../user/updatePassword.html" class="edit-button-text">
-                                비밀번호 수정
-                            </a>
-                        </div>
-                        <div class="edit-button">
-                            <a href="../user/login.html" class="edit-button-text">
-                                로그아웃
-                            </a>
-                        </div>
-                    `;
-            toggle.style.display = 'block';
-          } else {
-            toggle.innerHTML = '';
-            toggle.style.display = 'none';
-          }
-          isLoad = !isLoad;
         });
       });
     </script>
