@@ -11,6 +11,7 @@ const getBoardInfo = async function (postId) {
     return boardItem;
   } catch (error) {
     console.log(error);
+    alert('게시글 목록을 찾을 수 없습니다.');
     return null;
   }
 };
