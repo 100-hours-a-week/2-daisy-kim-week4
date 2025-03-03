@@ -16,14 +16,15 @@
       import { getBoardInfo } from '../util/boardInfo.js';
       import { getComments } from '../util/comment.js';
       import { myPageToggle } from '../component/myPageToggle.js';
-      import { getBoardDetail } from '../component/boardDetailInfo.js';
+      import { getBoardDetailHeader } from '../component/boardDetailInfo.js';
       import { commentListComponent } from '../component/commentList.js';
 
       document.addEventListener('DOMContentLoaded', async () => {
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
         const boardItem = await getBoardInfo(id);
-        getBoardDetail(boardItem);
+        getBoardDetailHeader(boardItem);
+        //getBoardDetails(boardItem);
         const commentItems = await getComments(id);
         commentListComponent(commentItems);
 
