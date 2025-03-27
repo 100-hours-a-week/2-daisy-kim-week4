@@ -1,4 +1,4 @@
-import { bindLoginEvents } from '../../scripts/login.js';
+import { bindLoginEvents } from '../../events/login.js';
 
 export default function Login() {
   const el = document.createElement('div');

@@ -8,7 +8,6 @@ const getComments = async function (postId) {
       throw new Error(`${response.status} 에러입니다.`);
     }
     const comments = await response.json();
-    console.log(comments);
     return comments;
   } catch (error) {
     console.log(error);

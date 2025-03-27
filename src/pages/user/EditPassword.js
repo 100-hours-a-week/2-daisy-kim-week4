@@ -1,7 +1,7 @@
 import goMainAction from '../../events/header.js';
 import { myPageToggle } from '../../components/myPageToggle.js';
-import { pwHelperEvent } from '../../events/pwHelperEvent.js';
-import getUserInfo from '../../util/getUserInfoApi.js';
+import { pwHelperEvent } from '../../helpers/pwHelperEvent.js';
+import getUserInfo from '../../api/getUserInfoApi.js';
 
 export default function EditPassword() {
   const el = document.createElement('div');

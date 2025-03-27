@@ -1,5 +1,6 @@
 import { getBoardDetails } from './boardDetailCountInfo.js';
-import formatDate from '../util/formDate.js';
+import formatDate from '../helpers/formDate.js';
+import { initPopupEvent } from '../events/popupBoard.js';
 
 async function getBoardDetailHeader(boardItem) {
   if (boardItem) {
@@ -37,6 +38,8 @@ async function getBoardDetailHeader(boardItem) {
             </div>
         `;
     boardDetail.innerHTML += await getBoardDetails(boardItem);
+
+    initPopupEvent();
   } else {
     document.getElementById('container').innerHTML =
       '<p>게시글을 찾을 수 없습니다.</p>';

@@ -1,7 +1,7 @@
-import { getBoardInfo } from '../../util/boardInfoApi.js';
+import { getBoardInfo } from '../../api/boardInfoApi.js';
 import { myPageToggle } from '../../components/myPageToggle.js';
 import goMainAction from '../../events/header.js';
-import getUserInfo from '../../util/getUserInfoApi.js';
+import getUserInfo from '../../api/getUserInfoApi.js';
 
 // 👉 form HTML을 생성하는 함수: "수정 모드" vs "작성 모드" 차이만 if문으로 처리
 function createPostForm(boardItem) {

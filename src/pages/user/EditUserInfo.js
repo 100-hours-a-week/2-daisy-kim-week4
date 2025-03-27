@@ -1,8 +1,8 @@
 import goMainAction from '../../events/header.js';
 import { myPageToggle } from '../../components/myPageToggle.js';
-import getUserInfo from '../../util/getUserInfoApi.js';
-import { nickNameHelperEvent } from '../../events/nicknameHelperEvent.js';
-import popupEvent from '../../events/popupMypage.js';
+import getUserInfo from '../../api/getUserInfoApi.js';
+import { nickNameHelperEvent } from '../../helpers/nicknameHelperEvent.js';
+import { initPopupEvent } from '../../events/popupMypage.js';
 
 export default function EditUserInfo() {
   const el = document.createElement('div');
@@ -25,7 +25,6 @@ export default function EditUserInfo() {
   setTimeout(async () => {
     goMainAction();
     myPageToggle();
-    popupEvent?.();
 
     const user = await getUserInfo();
     const formWrapper = el.querySelector('#edit-user-info-wrapper');
@@ -73,6 +72,8 @@ export default function EditUserInfo() {
       setTimeout(() => {
         nickNameHelperEvent();
       }, 100);
+
+      initPopupEvent();
     } else {
       formWrapper.innerHTML = `<p>사용자 정보를 찾을 수 없습니다.</p>`;
     }

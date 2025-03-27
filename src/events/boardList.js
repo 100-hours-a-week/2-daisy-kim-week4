@@ -1,8 +1,8 @@
 import goMainAction from '../events/header.js';
-import { getBoard } from '../util/boardListApi.js';
+import { getBoard } from '../api/boardListApi.js';
 import { myPageToggle } from '../components/myPageToggle.js';
 import { getBoardList } from '../components/boardList.js';
-import getUserInfo from '../util/getUserInfoApi.js';
+import getUserInfo from '../api/getUserInfoApi.js';
 
 export async function bindBoardListEvents() {
   try {

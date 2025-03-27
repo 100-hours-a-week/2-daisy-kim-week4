@@ -1,4 +1,4 @@
-function changeCnt(cnt) {
+export default function changeCnt(cnt) {
   if (cnt > 100000) {
     return '100k';
   } else if (cnt > 10000) {
@@ -8,4 +8,3 @@ function changeCnt(cnt) {
   }
   return cnt;
 }
-export { changeCnt };
