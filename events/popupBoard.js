@@ -1,5 +1,5 @@
 const popupEvent = document.addEventListener('DOMContentLoaded', async () => {
-  await fetch('../component/popUp.html')
+  await fetch('../../components/popUp.html')
     .then((response) => response.text())
     .then((html) => {
       document.getElementById('popup-overlay').innerHTML = html;

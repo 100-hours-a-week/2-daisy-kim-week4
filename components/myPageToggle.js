@@ -6,17 +6,17 @@ const myPageToggle = () => {
   myPageButton.addEventListener('click', () => {
     if (!isLoad) {
       toggle.innerHTML = `
-                        <a href="../user/updateUserInfo.html" class="edit-button">
+                        <a href="/user/edit" class="edit-button" data-link>
                             <div class="edit-button-text">
                                 회원정보 수정
                             </div>
                         </a>
-                        <a href="../user/updatePassword.html" class="edit-button">
+                        <a href="/user/edit/password" class="edit-button" data-link>
                             <div class="edit-button-text">
                                 비밀번호 수정
                             </div>
                         </a>
-                        <a href="../user/login.html" class="edit-button">
+                        <a href="/" class="edit-button" data-link>
                             <div class="edit-button-text">
                                 로그아웃
                             </div>
