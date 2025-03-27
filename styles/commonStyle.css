@@ -1,13 +1,13 @@
 /*공통 css*/
 body {
-  width: 1920px;
+  width: 100vw;
   height: 1080px;
   background-color: #f4f5f7;
   margin-left: 0px;
 }
 header {
   height: 104px;
-  width: 1920px;
+  width: 100vw;
   line-height: 104px;
   text-align: center;
   vertical-align: middle;
@@ -28,7 +28,7 @@ header {
 .profile-icon {
   height: 104px;
   position: absolute;
-  left: 1196px;
+  left: 62vw;
   top: 0px;
   display: flex;
   align-items: center;
@@ -49,7 +49,7 @@ header {
   top: 0px;
   width: 40px;
   height: 104px;
-  left: 684px;
+  left: 36vw;
   align-items: center;
 }
 .go-back-img {
@@ -70,7 +70,7 @@ header {
 #toggle-frame {
   position: absolute;
   top: 80px;
-  left: 1118px;
+  left: 58vw;
   display: none;
   width: 115px;
 }

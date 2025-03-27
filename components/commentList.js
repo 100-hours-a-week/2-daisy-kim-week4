@@ -1,3 +1,5 @@
+import formatDate from '../util/formDate.js';
+
 const commentListComponent = async (commentItems) => {
   const commentList = document.getElementById('comment-list');
   commentList.innerHTML = commentItems
@@ -9,8 +11,10 @@ const commentListComponent = async (commentItems) => {
                         <div class="comment-writer-profile">
                             <img class="comment-writer-profile-img" src="../assets/img/defaultProfile.png">
                         </div>
-                        <div class="comment-writer-name">${item.writer}</div>
-                        <div class="written-time">${item.time}</div>
+                        <div class="comment-writer-name">${item.userName}</div>
+                        <div class="written-time">${formatDate(
+                          item.createdAt
+                        )}</div>
                     </div>
                     <div class="comment-bottom">
                         ${item.content}
@@ -18,7 +22,7 @@ const commentListComponent = async (commentItems) => {
                 </div>
                 <div class="comment-buttons">
                   ${
-                    item.isMyComent === true
+                    item.myComment
                       ? `<button class="comment-edit" data-index="${index}">수정</button>
                     <button class="board-item-edit-button" id="comment-delete">삭제</button>`
                       : ''

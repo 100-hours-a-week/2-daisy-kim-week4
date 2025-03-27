@@ -1,4 +1,5 @@
 import { getBoardDetails } from './boardDetailCountInfo.js';
+import formatDate from '../util/formDate.js';
 
 async function getBoardDetailHeader(boardItem) {
   if (boardItem) {
@@ -10,18 +11,20 @@ async function getBoardDetailHeader(boardItem) {
                     <div class="board-item-info-left">
                         <div class="profile-img">
                             <img class="profile-img" src="${
-                              boardItem.profileImg === ''
+                              boardItem.userImageUrl === ''
                                 ? '../assets/img/defaultProfile.png'
-                                : boardItem.profileImg
+                                : `http://localhost:8080${boardItem.userImageUrl}`
                             }">
                         </div>
-                        <div class="profile-name">${boardItem.writer}</div>
-                        <div class="written-time">${boardItem.time}</div>
+                        <div class="profile-name">${boardItem.userName}</div>
+                        <div class="written-time">${formatDate(
+                          boardItem.createdAt
+                        )}</div>
                     </div>
                     <div class="board-item-info-right">
                       ${
-                        boardItem.isMyPost
-                          ? `<a href="boardPost.html?id=${boardItem.id}"><button class="board-item-edit-button">
+                        boardItem.myBoard
+                          ? `<a href="${boardItem.id}/post" data-link><button class="board-item-edit-button">
                             수정
                         </button></a>
                         <button class="board-item-edit-button" id = "board-delete">
