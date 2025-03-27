@@ -1,5 +1,4 @@
-import { bindBoardListEvents } from '../../scripts/boardList.js';
-import getUserInfo from '../../util/getUserInfoApi.js';
+import { bindBoardListEvents } from '../../events/boardList.js';
 
 export default function BoardList() {
   const el = document.createElement('div');

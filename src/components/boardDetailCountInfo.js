@@ -1,4 +1,4 @@
-import { changeCnt } from '../events/cntIncludesK.js';
+import changeCnt from '../helpers/cntIncludesK.js';
 
 async function getBoardDetails(boardItem) {
   if (boardItem) {

@@ -1,5 +1,5 @@
-import { changeCnt } from '../events/cntIncludesK.js';
-import formatDate from '../util/formDate.js';
+import changeCnt from '../helpers/cntIncludesK.js';
+import formatDate from '../helpers/formDate.js';
 
 export function getBoardList(boardItems) {
   const boardList = document.getElementById('board-list');

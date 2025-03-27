@@ -1,5 +1,5 @@
-import { validatePw } from '../events/pwHelperEvent.js';
-import { validateEmail } from '../events/userValidationEvent.js';
+import { validatePw } from '../helpers/pwHelperEvent.js';
+import { validateEmail } from '../helpers/userValidationEvent.js';
 
 export function bindLoginEvents() {
   const emailInput = document.getElementById('email-input');

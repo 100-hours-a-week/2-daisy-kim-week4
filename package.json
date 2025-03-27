@@ -1,9 +1,9 @@
 {
-  "name": "your-project-name",
+  "name": "anything-say-party",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node src/server.js"
   },
   "dependencies": {
     "express": "^4.21.2"

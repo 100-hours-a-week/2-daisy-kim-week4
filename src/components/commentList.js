@@ -1,7 +1,9 @@
-import formatDate from '../util/formDate.js';
+import formatDate from '../helpers/formDate.js';
+import { initPopupEvent } from '../events/popupComment.js';
 
 const commentListComponent = async (commentItems) => {
   const commentList = document.getElementById('comment-list');
+
   commentList.innerHTML = commentItems
     .map(
       (item, index) => `
@@ -32,5 +34,6 @@ const commentListComponent = async (commentItems) => {
             `
     )
     .join('');
+  initPopupEvent();
 };
 export { commentListComponent };
