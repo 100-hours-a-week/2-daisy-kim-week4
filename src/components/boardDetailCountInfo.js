@@ -5,8 +5,8 @@ async function getBoardDetails(boardItem) {
     return `
       <div class="board-body">
           <img class="board-img" src="${
-            boardItem.imageUrl === ''
-              ? '../assets/img/warning.png'
+            boardItem.imageUrl === null
+              ? '../assets/img/test_img.jpg'
               : `http://localhost:8080${boardItem.imageUrl}`
           }">
           <div class="board-content">${boardItem.content}</div>

@@ -2,22 +2,18 @@ import { getBoardInfo } from '../../api/boardInfoApi.js';
 import { myPageToggle } from '../../components/myPageToggle.js';
 import goMainAction from '../../events/header.js';
 import getUserInfo from '../../api/getUserInfoApi.js';
+import { navigateTo } from '../../router.js';
 
-// 👉 form HTML을 생성하는 함수: "수정 모드" vs "작성 모드" 차이만 if문으로 처리
 function createPostForm(boardItem) {
-  const isEdit = !!boardItem; // boardItem이 있으면 수정 모드, 없으면 작성 모드
+  const isEdit = !!boardItem;
 
-  // 타이틀/컨텐츠 기본값
   const titleValue = isEdit ? boardItem.title : '';
   const contentValue = isEdit ? boardItem.content : '';
-  // 이미지 파일명 표시
   const imageFileName =
     isEdit && boardItem.imageUrl ? boardItem.imageUrl : '파일을 선택해주세요.';
 
-  // 버튼 표시
   const buttonLabel = isEdit ? '수정하기' : '완료';
 
-  // hidden input: 수정 모드에서만 id 전달
   const hiddenIdInput = isEdit
     ? `<input type="hidden" name="id" value="${boardItem.id}">`
     : '';
@@ -51,22 +47,22 @@ function createPostForm(boardItem) {
         </div>
       </div>
       ${hiddenIdInput}
-      <input class="post-button" type="submit" value="${buttonLabel}">
+      <input class="post-button" type="button" value="${buttonLabel}">
     </form>
   `;
 }
 
 function bindPostEvents(boardItem) {
-  // 제목, 내용, 버튼, 헬퍼 텍스트 가져오기
+  const isEdit = !!boardItem;
+  const id = isEdit ? boardItem.id : null;
+
   const titleInput = document.querySelector('.post-title-input');
   const contentInput = document.querySelector('.content-input');
   const helpText = document.querySelector('.help-text');
   const postButton = document.querySelector('.post-button');
 
-  // 초기 버튼색 설정
   setButtonColor();
 
-  // 제목 입력 제한 & 버튼색
   titleInput.addEventListener('input', () => {
     if (titleInput.value.length > 26) {
       titleInput.value = titleInput.value.slice(0, 26);
@@ -74,27 +70,62 @@ function bindPostEvents(boardItem) {
     setButtonColor();
   });
 
-  // 내용 입력
   contentInput.addEventListener('input', () => {
     setButtonColor();
   });
 
-  // 등록/수정 버튼
-  postButton.addEventListener('click', (e) => {
-    // 버튼이 비활성이라면
+  const fileInput = document.getElementById('image-input');
+  const fileNameSpan = document.querySelector('.file-name');
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files && fileInput.files.length > 0) {
+      fileNameSpan.textContent = fileInput.files[0].name;
+    } else {
+      fileNameSpan.textContent = '파일을 선택해주세요.';
+    }
+  });
+
+  postButton.addEventListener('click', async (e) => {
     if (postButton.style.backgroundColor !== 'rgb(127, 106, 238)') {
       e.preventDefault();
       if (helpText) {
         helpText.textContent = '*제목, 내용을 모두 작성해 주세요.';
       }
     } else {
-      // 👉 여기에서 API 호출, 폼 전송 로직 등 수행 (생략)
-      // e.preventDefault();  // SPA 완전 적용 시
-      // console.log(isEdit ? '수정로직' : '작성로직');
+      try {
+        const formData = new FormData();
+        formData.append('title', titleInput.value);
+        formData.append('content', contentInput.value);
+
+        if (fileInput.files && fileInput.files.length > 0) {
+          formData.append('file', fileInput.files[0]);
+        }
+
+        if (!isEdit) {
+          const response = await fetch('http://localhost:8080/board', {
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+          });
+          console.log('POST 응답:', response);
+        } else {
+          const response = await fetch(`http://localhost:8080/board/${id}`, {
+            method: 'PATCH',
+            credentials: 'include',
+            body: formData,
+          });
+          console.log('PATCH 응답:', response);
+        }
+        navigateTo('/board');
+      } catch (error) {
+        console.log(error);
+      } finally {
+        e.preventDefault();
+      }
+      console.log(isEdit ? '수정로직' : '작성로직');
     }
   });
 
-  // 내부 함수: 버튼 색 결정
   function setButtonColor() {
     if (titleInput.value.trim() && contentInput.value.trim()) {
       postButton.style.backgroundColor = '#7f6aee';
@@ -121,7 +152,6 @@ export default function BoardPost(params) {
     </div>
   `;
 
-  // 렌더링 후 로직
   setTimeout(async () => {
     myPageToggle();
     goMainAction();
@@ -135,24 +165,20 @@ export default function BoardPost(params) {
       }
     }
 
-    // 뒤로가기 버튼
     const backButton = document.getElementById('go-back');
     backButton?.addEventListener('click', () => {
       window.history.back();
     });
 
-    // id 파라미터 추출
     const { id } = params || {};
     let boardItem = null;
     if (id) {
       boardItem = await getBoardInfo(id);
     }
 
-    // 폼 생성
     const container = document.getElementById('container');
     container.innerHTML = createPostForm(boardItem);
 
-    // 이벤트 바인딩
     bindPostEvents(boardItem);
   });
 
