@@ -35,7 +35,6 @@ export default function EditUserInfo() {
         topProfileImg.src = `http://localhost:8080${user.imageUrl}`;
       }
 
-      // ✅ 회원 정보 폼 렌더링
       formWrapper.innerHTML = `
         <div class="signup-profile-container">
           <div class="signup-profile-title">
