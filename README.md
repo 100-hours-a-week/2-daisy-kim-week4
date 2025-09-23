@@ -2,6 +2,7 @@
 
 # 📚 프로젝트 주제
 ### 3주차 과제 디벨롭 - vanilla.js로 커뮤니티 event, fetch 처리하기
+### [🔗 3주차 과제 보러가기 - Vanlla.js로 UI 구현하기](https://github.com/100-hours-a-week/2-daisy-kim-week3)
 
 <br>
 
